@@ -13,7 +13,23 @@
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="vendor/dataTables/css/jquery.dataTables.min.css"/>
- 
+    <script type="text/javascript" >
+        //获取userid
+        userid=null;
+        var url=location.search;
+        var Request = new Object();
+        if(url.indexOf("?")!=-1)
+        {
+            var str = url.substr(1)　//去掉?号
+            strs = str.split("&");
+            for(var i=0;i<strs.length;i++)
+            {
+                Request[strs[i ].split("=")[0]]=unescape(strs[ i].split("=")[1]);
+            }
+            //只取第一个
+            userid=unescape(strs[0].split("=")[1]);
+        }
+    </script>
   </head>
 
   <body ng-app="elasticsearchSqlApp" ng-controller="MainController">

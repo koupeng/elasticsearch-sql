@@ -98,6 +98,11 @@
             <artifactId>jts</artifactId>
             <version>1.13</version>
         </dependency>
+        <dependency>
+            <groupId>org.wisdom-framework</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.34_1</version>
+        </dependency>
     </dependencies>
 
 
