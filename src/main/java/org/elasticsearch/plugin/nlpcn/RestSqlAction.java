@@ -36,13 +36,23 @@ public class RestSqlAction extends BaseRestHandler {
 		String userid=null;
 		if (sql == null) {
 			sql = request.content().toUtf8();
-			JSONParser parser = new JSONParser(sql);
-			Map map=  parser.parseMap();
-			System.out.println("sql from content="+map.get("query"));
-			System.out.println("userid from content="+map.get("userid"));
+			System.out.println("sql from content.....="+sql);
+			if(null!=sql && !"".equals(sql)){
+				System.out.println("logcenter="+sql);
+				try{
+					JSONParser parser = new JSONParser(sql);
+					Map map=  parser.parseMap();
+					System.out.println("sql from content="+map.get("query"));
+					System.out.println("userid from content="+map.get("userid"));
 
-			sql=map.get("query")==null?"":map.get("query").toString();
-			userid=map.get("userid")==null?"":map.get("userid").toString();
+					sql=map.get("query")==null?"":map.get("query").toString();
+					userid=map.get("userid")==null?"":map.get("userid").toString();
+				}catch (Throwable e){
+					sql = request.content().toUtf8();
+				}
+
+			}
+
 		}
 		SearchDao searchDao = new SearchDao(client);
 		QueryAction queryAction= searchDao.explain(sql);

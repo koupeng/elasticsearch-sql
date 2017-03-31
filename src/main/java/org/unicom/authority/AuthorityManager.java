@@ -21,7 +21,9 @@ import org.nlpcn.es4sql.query.join.JoinRequestBuilder;
 import org.nlpcn.es4sql.query.multi.MultiQueryRequestBuilder;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 将Elasticsearch-sql引入到LogCenter中
@@ -44,8 +46,20 @@ public class AuthorityManager {
         try{
             //step0:获取索引
             String []indices=getIndices(queryAction,channel);
+            System.out.println("====获取索引===");
+            for(String index:indices){
+                System.out.println("index==="+index);
+            }
+
             //step1:根据userid获取SystemMap
             HashMap<String,String> systemMap = MysqlUtil.getIndicesByUserid(userid);
+            System.out.println("====获取索引===");
+            Set<Map.Entry<String,String>> entrySet=systemMap.entrySet();
+            Iterator it = entrySet.iterator();
+            while(it.hasNext()){
+                Map.Entry<String,String> en = (Map.Entry<String, String>) it.next();
+                System.out.println(en.getKey()+"==="+en.getValue());
+            }
             //step2:匹配
             int size = indices.length;
             for(int i=0;i<size;i++){
@@ -59,7 +73,7 @@ public class AuthorityManager {
                     //只取第一个
                     String index_input=indexGroup[0];
                     //校验是否存在
-                    if(!systemMap.containsValue(index_input)){
+                    if(!systemMap.containsKey(index_input)){
                         //sendErrorAuthenticateResponse(channel);
                         return false;
                     }
@@ -74,6 +88,26 @@ public class AuthorityManager {
         }
     }
 
+    /**
+     *检验Map中是否存在value
+     * @param value
+     * @return
+     */
+    private static boolean hasValue(HashMap<String,String> map,String value){
+        if(null==map ){
+            return false;
+        }
+        Set<Map.Entry<String,String>> entrySet=map.entrySet();
+        Iterator it = entrySet.iterator();
+        while(it.hasNext()){
+            Map.Entry<String,String> en = (Map.Entry<String, String>) it.next();
+            String value_c= en.getValue();
+            if(value_c.equalsIgnoreCase(value)){
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * 如果认证失败，发送认证失败结果到前台
      * @param channel

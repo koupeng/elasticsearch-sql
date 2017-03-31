@@ -143,7 +143,7 @@ function updateWithScrollIfNeeded (query) {
     $scope.authenticate = function() {
 	    //非logcenter无需校验
 	    if(userid==null){
-	        search();
+            $scope.search();
 	        return;
         }
         // Reset results and error box
@@ -171,7 +171,7 @@ function updateWithScrollIfNeeded (query) {
             .success(function(data, status, headers, config) {
                 console.log("成功");
                 //校验成功搜索
-               search();
+                $scope.search();
             })
             .error(function(data, status, headers, config) {
                 $scope.resultExplan = false;
