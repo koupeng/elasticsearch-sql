@@ -28,6 +28,7 @@
             }
             //只取第一个
             userid=unescape(strs[0].split("=")[1]);
+            console.log("userid="+userid);
         }
     </script>
   </head>
@@ -185,7 +186,7 @@
           <!-- Query area -->
           <div class="search-area">
           	<textarea id="queryTextarea">SELECT * FROM myindex</textarea>
-  	        <button type="button" ng-click="search()" id="searchButton" class="btn btn-success search-button" ng-bind-html="getButtonContent(searchLoading,'Search')" ng-cloak>
+  	        <button type="button" ng-click="authenticate()" id="searchButton" class="btn btn-success search-button" ng-bind-html="getButtonContent(searchLoading,'Search')" ng-cloak>
             </button>
 
             <button type="button" ng-click="explain()" id="explainButton" class="btn btn-info explain-button" ng-bind-html="getButtonContent(explainLoading,'Explain')" ng-cloak>

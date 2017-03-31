@@ -139,6 +139,54 @@ function updateWithScrollIfNeeded (query) {
   return query;
 }
 
+
+    $scope.authenticate = function() {
+	    //非logcenter无需校验
+	    if(userid==null){
+	        search();
+	        return;
+        }
+        // Reset results and error box
+        $scope.error = "";
+        $scope.resultsColumns = [];
+        $scope.resultsRows = [];
+        $scope.explainLoading = true;
+        $scope.showResults = false;
+        tablePresenter.destroy();
+        $scope.resultExplan = true;
+        $scope.$apply();
+
+
+        saveUrl()
+
+        var query = window.editor.getValue();
+        var query_format={
+            "query":"",
+            "userid":""
+        };
+        query_format['query']=query;
+        query_format['userid']=userid;
+        console.log("userid="+userid);
+        $http.post($scope.url + "_sql/_authenticate", query_format)
+            .success(function(data, status, headers, config) {
+                console.log("成功");
+                //校验成功搜索
+               search();
+            })
+            .error(function(data, status, headers, config) {
+                $scope.resultExplan = false;
+                if(data == "") {
+                    $scope.error = "Error occured! response is not avalible.";
+                }
+                else {
+                    $scope.error = JSON.stringify(data);
+                }
+            })
+            .finally(function() {
+                $scope.explainLoading = false;
+                $scope.$apply()
+            });
+    }
 	$scope.search = function() {
 		// Reset results and error box
 		$scope.error = "";

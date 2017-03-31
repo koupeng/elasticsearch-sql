@@ -167,6 +167,13 @@
                                     <outputDirectory>${project.build.directory}</outputDirectory>
                                     <destFileName>deleteByQuery.jar</destFileName>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wisdom-framework</groupId>
+                                    <artifactId>mysql-connector-java</artifactId>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>${project.build.directory}</outputDirectory>
+                                    <destFileName>mysql-connector-java.jar</destFileName>
+                                </artifactItem>
                             </artifactItems>
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
